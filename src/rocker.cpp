@@ -1,15 +1,15 @@
-#include "rockerSwitch.h"
+#include "rocker.h"
 
-RockerSwitch::RockerSwitch() = default;
+Rocker::Rocker() = default;
 
-RockerSwitch::RockerSwitch(uint8_t pin1, uint8_t pin2)
+Rocker::Rocker(uint8_t pin1, uint8_t pin2)
 {
     _pin1 = pin1;
     _pin2 = pin2;
     _lastDebounceTime = 0;
 }
 
-void RockerSwitch::setup()
+void Rocker::setup()
 {
     pinMode(_pin1, INPUT_PULLUP);
     pinMode(_pin2, INPUT_PULLUP);
@@ -17,7 +17,7 @@ void RockerSwitch::setup()
     _previousState2 = digitalRead(_pin2);
 }
 
-void RockerSwitch::read()
+void Rocker::read()
 {
     uint8_t pin1Reading = digitalRead(_pin1);
     uint8_t pin2Reading = digitalRead(_pin2);

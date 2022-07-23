@@ -1,13 +1,14 @@
 #include <Arduino.h>
 #include <Encoder.h>
-#include "rockerSwitch.h"
+#include "rocker.h"
 
 const uint8_t BUTTON_PIN = 0;
 const uint8_t SWITCH_PIN = 1;
 const uint8_t ENCODER_PIN_1 = 4;
 const uint8_t ENCODER_PIN_2 = 5;
 
-RockerSwitch rocker1(2, 3);
+Rocker rocker1(2, 3);
+Rocker rocker2(11, 12);
 
 Encoder encoder(ENCODER_PIN_1, ENCODER_PIN_2);
 Encoder encoder2(6, 7);
@@ -23,6 +24,7 @@ void setup() {
     pinMode(SWITCH_PIN, INPUT_PULLUP);
 
     rocker1.setup();
+    rocker2.setup();
 
     previousSwitchState = digitalRead(SWITCH_PIN);
     previousEncoderPosition = encoder.read();
@@ -109,4 +111,5 @@ void loop() {
     readEncoderPin();
 
     rocker1.read();
+    rocker2.read();
 }
