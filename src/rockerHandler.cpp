@@ -1,15 +1,15 @@
-#include "rocker.h"
+#include "rockerHandler.h"
 
-Rocker::Rocker() = default;
+RockerHandler::RockerHandler() = default;
 
-Rocker::Rocker(uint8_t pin1, uint8_t pin2)
+RockerHandler::RockerHandler(uint8_t pin1, uint8_t pin2)
 {
     _pin1 = pin1;
     _pin2 = pin2;
     _lastDebounceTime = 0;
 }
 
-void Rocker::setup()
+void RockerHandler::setup()
 {
     pinMode(_pin1, INPUT_PULLUP);
     pinMode(_pin2, INPUT_PULLUP);
@@ -17,7 +17,7 @@ void Rocker::setup()
     _previousState2 = digitalRead(_pin2);
 }
 
-void Rocker::read()
+void RockerHandler::read()
 {
     uint8_t pin1Reading = digitalRead(_pin1);
     uint8_t pin2Reading = digitalRead(_pin2);

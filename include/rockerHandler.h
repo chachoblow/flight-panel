@@ -2,11 +2,11 @@
 
 #include <arduino.h>
 
-class Rocker
+class RockerHandler
 {
     public:
-        Rocker();
-        Rocker(uint8_t, uint8_t);
+        RockerHandler();
+        RockerHandler(uint8_t, uint8_t);
         void setup();
         void read();
     private:

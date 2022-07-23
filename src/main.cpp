@@ -1,21 +1,18 @@
 #include <Arduino.h>
-#include <Encoder.h>
-#include "rocker.h"
+#include "rockerHandler.h"
+#include "encoderHandler.h"
 
 const uint8_t BUTTON_PIN = 0;
 const uint8_t SWITCH_PIN = 1;
 const uint8_t ENCODER_PIN_1 = 4;
 const uint8_t ENCODER_PIN_2 = 5;
 
-Rocker rocker1(2, 3);
-Rocker rocker2(11, 12);
+RockerHandler rocker1(2, 3);
+RockerHandler rocker2(11, 12);
 
-Encoder encoder(ENCODER_PIN_1, ENCODER_PIN_2);
-Encoder encoder2(6, 7);
-Encoder encoder3(9, 10);
-long previousEncoderPosition = -999;
-long previousEncoderPosition2 = -999;
-long previousEncoderPosition3 = -999;
+EncoderHandler encoder1(4, 5);
+EncoderHandler encoder2(6, 7);
+EncoderHandler encoder3(9, 10);
 
 uint8_t previousSwitchState;
 
@@ -26,10 +23,11 @@ void setup() {
     rocker1.setup();
     rocker2.setup();
 
+    encoder1.setup();
+    encoder2.setup();
+    encoder3.setup();
+
     previousSwitchState = digitalRead(SWITCH_PIN);
-    previousEncoderPosition = encoder.read();
-    previousEncoderPosition2 = encoder.read();
-    previousEncoderPosition3 = encoder.read();
 }
 
 void readButtonPin()
@@ -57,59 +55,14 @@ void readSwitchPin()
     } 
 }
 
-void readEncoderPin()
-{
-    long encoderPosition = encoder.read();
-
-    if (encoderPosition != previousEncoderPosition && encoderPosition % 4 == 0)
-    {
-        if (encoderPosition > previousEncoderPosition)
-        {
-            Serial.println("Encoder increased");
-        }
-        else 
-        {
-            Serial.println("Encoder decreased");
-        }
-        previousEncoderPosition = encoderPosition;
-    }
-
-    encoderPosition = encoder2.read();
-
-    if (encoderPosition != previousEncoderPosition2 && encoderPosition % 4 == 0)
-    {
-        if (encoderPosition > previousEncoderPosition2)
-        {
-            Serial.println("Encoder 2 increased");
-        }
-        else 
-        {
-            Serial.println("Encoder 2 decreased");
-        }
-        previousEncoderPosition2 = encoderPosition;
-    }
-
-    encoderPosition = encoder3.read();
-
-    if (encoderPosition != previousEncoderPosition3 && encoderPosition % 4 == 0)
-    {
-        if (encoderPosition > previousEncoderPosition3)
-        {
-            Serial.println("Encoder 3 increased");
-        }
-        else 
-        {
-            Serial.println("Encoder 3 decreased");
-        }
-        previousEncoderPosition3 = encoderPosition;
-    }
-}
-
 void loop() {
     readButtonPin();
     readSwitchPin();
-    readEncoderPin();
 
     rocker1.read();
     rocker2.read();
+
+    encoder1.read();
+    encoder2.read();
+    encoder3.read();
 }
